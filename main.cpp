@@ -134,7 +134,7 @@ int main(int argc, char *argv[])
 
     // Board name
     Q_ASSERT(fp.pos() == 6);
-    writeRawString(ds, "BBBCamera", 32);
+    writeRawString(ds, "cape-bone-troodon-cam", 32);
 
     // Version
     Q_ASSERT(fp.pos() == 38);
@@ -146,7 +146,7 @@ int main(int argc, char *argv[])
 
     // Part Number
     Q_ASSERT(fp.pos() == 58);
-    writeRawString(ds, "0000-0000", 16);
+    writeRawString(ds, "troodon-cam", 16);
 
     // Number of pins used
     Q_ASSERT(fp.pos() == 74);
