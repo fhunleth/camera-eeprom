@@ -25,14 +25,16 @@ static void writeRawString(QDataStream &ds, const char *str, int outputLen)
 
 #define NO_PULLUPDN (1 << 3)
 
+#define SLEWCTRL_SLOW (1 << 6)
+
 #define MUXMODE(x)  (x & 7)
 
 #define CONFIGURABLE_PIN_COUNT (74)
 static quint16 pinUsage[CONFIGURABLE_PIN_COUNT] = {
     /* P9-22 UART2_RXD */  USED | BIDIR | MUXMODE (1),
     /* P9-21 UART2_TXD */  USED | BIDIR | MUXMODE (1),
-    /* P9-18 I2C1_SDA */   USED | BIDIR | MUXMODE (2),
-    /* P9-17 I2C1_SCL */   USED | OUTPUT | MUXMODE (2),
+    /* P9-18 I2C1_SDA */   USED | INPUT | SLEWCTRL_SLOW | PULL_UP | MUXMODE (2), // Match DTS Pinmux config
+    /* P9-17 I2C1_SCL */   USED | INPUT | SLEWCTRL_SLOW | PULL_UP | MUXMODE (2), // Match DTS Pinmux config
     /* P9-42 GPIO0_7 */    UNUSED,
     /* P8-35 UART4_CTSN */ UNUSED,
     /* P8-33 UART4_RTSN */ UNUSED,
@@ -42,8 +44,8 @@ static quint16 pinUsage[CONFIGURABLE_PIN_COUNT] = {
     /* P9-20 I2C2_SDA */   USED | BIDIR | MUXMODE (3),
     /* P9-26 UART1_RXD */  USED | INPUT | NO_PULLUPDN | MUXMODE (6),
     /* P9-24 UART1_TXD */  USED | INPUT | NO_PULLUPDN | MUXMODE (6),
-    /* P9-41 CLKOUT2 */    USED | OUTPUT | MUXMODE (3),
-    /* P8-19 EHRPWM2A */   USED | INPUT | NO_PULLUPDN | MUXMODE (7),
+    /* P9-41 CLKOUT2 */    UNUSED,
+    /* P8-19 EHRPWM2A */   USED | OUTPUT | MUXMODE (4),
     /* P8-13 EHRPWM2B */   UNUSED,
     /* P8-14 GPIO0_26 */   UNUSED,
     /* P8-17 GPIO0_27 */   UNUSED,
@@ -94,8 +96,8 @@ static quint16 pinUsage[CONFIGURABLE_PIN_COUNT] = {
     /* P9-30 SPI1_D1 */    UNUSED,
     /* P9-28 SPI1_CS0 */   UNUSED,
     /* P9-27 GPIO3_19 */   USED | INPUT | NO_PULLUPDN | MUXMODE(7),
-    /* P9-31 SPI1_SCLK */  USED | INPUT | NO_PULLUPDN | MUXMODE(7),
-    /* P9-25 GPIO3_21 */   USED | INPUT | NO_PULLUPDN | MUXMODE(6)
+    /* P9-31 SPI1_SCLK */  UNUSED,
+    /* P9-25 GPIO3_21 */   USED | MUXMODE(5)
 };
 
 static int usedPins()
